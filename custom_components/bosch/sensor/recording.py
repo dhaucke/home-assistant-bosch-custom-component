@@ -12,7 +12,6 @@ from homeassistant.components.recorder.models import (
     StatisticData,
     timestamp_to_datetime_or_none,
 )
-from homeassistant.const import STATE_UNAVAILABLE
 from homeassistant.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)
@@ -55,7 +54,12 @@ class RecordingSensor(StatisticHelper):
                 and self._attr_state_class == SensorStateClass.TOTAL):
             self._attr_state_class = SensorStateClass.MEASUREMENT
 
-        self._attr_last_reset = last_reset
+        # last_reset is only valid for state_class TOTAL - HA raises
+        # ValueError if set on e.g. MEASUREMENT entities (room/outdoor
+        # temperature recordings).
+        self._attr_last_reset = (
+            last_reset if self._attr_state_class == SensorStateClass.TOTAL else None
+        )
         if self._update_init:
             self._update_init = False
             self.async_schedule_update_ha_state()
@@ -78,7 +82,7 @@ class RecordingSensor(StatisticHelper):
             for row in data[VALUE]:
                 if row["d"] == last_hour:
                     return row.get(VALUE)
-            return STATE_UNAVAILABLE
+            return None
 
         self._state = find_idx()
         self.attrs_write(last_reset=last_hour)

@@ -9,7 +9,6 @@ from homeassistant.const import (
     UnitOfEnergy,
     UnitOfTemperature,
     UnitOfVolume,
-    STATE_UNAVAILABLE,
 )
 from homeassistant.util import dt as dt_util
 from homeassistant.components.recorder.models import (
@@ -128,12 +127,12 @@ class EnergySensor(StatisticHelper):
             else:
                 return True
             _LOGGER.debug("Reading attribute not available %s", self._attr_read_key)
-            self._state = STATE_UNAVAILABLE
+            self._state = None
             return False
 
         if not value or not search_read_attr():
             _LOGGER.debug("Energy sensor data not available %s", self._attr_name)
-            self._state = STATE_UNAVAILABLE
+            self._state = None
 
         if self._new_stats_api and (
             self._unit_of_measurement == UnitOfEnergy.KILO_WATT_HOUR
