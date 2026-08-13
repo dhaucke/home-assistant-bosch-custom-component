@@ -52,8 +52,6 @@ Dies ist ein kleiner, unbezahlter Fork, der gepflegt wird, um reale, bekannte Bu
 
 - [Issues](https://github.com/dhaucke/home-assistant-bosch-custom-component/issues)
 
-Wenn du die Arbeit am Original unterstützen möchtest: [:heart: Sponsor (pszafer)](https://github.com/sponsors/pszafer)
-
 ## Haftungsausschluss
 
 Dieses Paket und sein Autor stehen in keiner Verbindung zu Bosch, Buderus, Nefit oder IVT. Nutzung auf eigene Gefahr.
@@ -100,8 +98,6 @@ Bosch changed cloud connectivity for EasyControl devices (including CT200) on EU
 This is a small, unpaid fork maintained to fix real, known bugs left unaddressed upstream — not a funded or team-maintained project.
 
 - [Issues](https://github.com/dhaucke/home-assistant-bosch-custom-component/issues)
-
-If you'd like to support work on the original: [:heart: Sponsor (pszafer)](https://github.com/sponsors/pszafer)
 
 ## Disclaimer
 

@@ -9,6 +9,6 @@
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/dhaucke/home-assistant-bosch-custom-component/issues",
   "requirements": ["bosch-thermostat-client==v0.28.2"],
-  "version": "2026.8.12",
+  "version": "2026.8.13",
   "zeroconf": ["_buderus._tcp.local."]
 }
