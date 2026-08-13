@@ -1,0 +1,27 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release_zip:
+    name: Prepare release asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: ZIP bosch dir
+        run: |
+          cd ${{ github.workspace }}/custom_components/bosch
+          zip bosch.zip -r ./
+
+      - name: Upload zip to release
+        uses: svenstaro/upload-release-action@2.11.3
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ github.workspace }}/custom_components/bosch/bosch.zip
+          asset_name: bosch.zip
+          tag: ${{ github.ref }}
+          overwrite: true
