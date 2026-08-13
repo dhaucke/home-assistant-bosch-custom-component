@@ -112,6 +112,11 @@
       },
       "switch": {
           "dhw_charge": { "name": "Charge" }
+      },
+      "number": {
+          "dhw_charge_duration": { "name": "Charge duration" },
+          "dhw_charge_setpoint": { "name": "Charge setpoint" },
+          "pool_setpoint_temperature": { "name": "Pool setpoint temperature" }
       }
   }
 }

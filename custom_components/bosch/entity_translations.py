@@ -85,3 +85,9 @@ BINARY_SENSOR_TRANSLATION_KEYS: dict[str, str] = {
 SWITCH_TRANSLATION_KEYS: dict[str, str] = {
     "charge": "dhw_charge",
 }
+
+NUMBER_TRANSLATION_KEYS: dict[str, str] = {
+    "chargeDuration": "dhw_charge_duration",
+    "singleChargeSetpoint": "dhw_charge_setpoint",
+    "poolSetpointTemperature": "pool_setpoint_temperature",
+}

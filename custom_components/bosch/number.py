@@ -8,6 +8,7 @@ from homeassistant.components.number.const import NumberMode
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 
 from .bosch_entity import BoschEntity, async_migrate_unique_id
+from .entity_translations import NUMBER_TRANSLATION_KEYS
 from .const import (
     CIRCUIT_DEVICE_TRANSLATION_KEYS,
     CIRCUITS,
@@ -102,8 +103,13 @@ class BoschNumber(BoschEntity, NumberEntity):
             hass=hass, uuid=uuid, bosch_object=bosch_object, gateway=gateway
         )
         self._domain_name = domain_name
-        self._attr_name = name
         self._attr_uri = attr_uri
+        translation_key = NUMBER_TRANSLATION_KEYS.get(attr_uri)
+        if translation_key:
+            self._attr_has_entity_name = True
+            self._attr_translation_key = translation_key
+        else:
+            self._attr_name = name
         self._state = bosch_object.state
         self._update_init = True
         self._attr_unique_id = f"{self._domain_name}{self._attr_uri}{self._uuid}"

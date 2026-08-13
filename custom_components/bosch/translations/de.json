@@ -112,6 +112,11 @@
       },
       "switch": {
           "dhw_charge": { "name": "Laden" }
+      },
+      "number": {
+          "dhw_charge_duration": { "name": "Ladedauer" },
+          "dhw_charge_setpoint": { "name": "Lade-Sollwert" },
+          "pool_setpoint_temperature": { "name": "Pool-Sollwerttemperatur" }
       }
   }
 }
