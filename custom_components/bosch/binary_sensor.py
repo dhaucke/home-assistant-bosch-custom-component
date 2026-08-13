@@ -5,7 +5,8 @@ from bosch_thermostat_client.const import BINARY, ON, USED
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 
-from .bosch_entity import BoschEntity
+from .bosch_entity import BoschEntity, async_migrate_unique_id
+from .entity_translations import BINARY_SENSOR_TRANSLATION_KEYS
 from .const import (
     BINARY_SENSOR,
     DOMAIN,
@@ -27,6 +28,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     for bosch_sensor in data[GATEWAY].sensors:
         if bosch_sensor.kind == BINARY:
+            async_migrate_unique_id(
+                hass,
+                BINARY_SENSOR,
+                f"Sensors{bosch_sensor.name}{uuid}",
+                f"Sensors{bosch_sensor.attr_id}{uuid}",
+            )
             data[BINARY_SENSOR].append(
                 BoschBinarySensor(
                     hass=hass,
@@ -65,12 +72,17 @@ class BoschBinarySensor(BoschEntity, BinarySensorEntity):
             hass=hass, uuid=uuid, bosch_object=bosch_object, gateway=gateway
         )
 
-        self._attr_name = name
         self._attr_uri = attr_uri
+        translation_key = BINARY_SENSOR_TRANSLATION_KEYS.get(attr_uri)
+        if translation_key:
+            self._attr_has_entity_name = True
+            self._attr_translation_key = translation_key
+        else:
+            self._attr_name = name
         self._state = None
         self._update_init = True
 
-        self._attr_unique_id = f"{self._domain_name}{self._attr_name}{self._uuid}"
+        self._attr_unique_id = f"{self._domain_name}{self._attr_uri}{self._uuid}"
         self._attrs = {}
         self._attr_entity_registry_enabled_default = is_enabled
 
@@ -83,6 +95,10 @@ class BoschBinarySensor(BoschEntity, BinarySensorEntity):
     def device_name(self):
         """Return name displayed in device_info."""
         return "Bosch sensors"
+
+    @property
+    def device_translation_key(self):
+        return "bosch_sensors"
 
     async def async_update(self):
         """Update state of device."""

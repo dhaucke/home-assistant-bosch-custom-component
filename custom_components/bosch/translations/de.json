@@ -1,6 +1,5 @@
 {
   "config": {
-      "title": "Bosch Thermostat",
       "step": {
           "choose_type": {
               "title": "Choose device type.",
@@ -43,12 +42,62 @@
   "options": {
     "step": {
       "init": {
-        "title": "Bosch options",
+        "title": "Bosch-Optionen",
         "data": {
-          "new_stats_api": "Use new statistic API",
-          "optimistic_mode": "Use optimistic mode for some functions (currently CT200 Operation mode set)."
+          "new_stats_api": "Neue Statistik-API verwenden",
+          "optimistic_mode": "Optimistischen Modus für einige Funktionen verwenden (aktuell CT200-Betriebsmodus-Einstellung)."
         }
       }
     }
+  },
+  "device": {
+      "bosch_sensors": { "name": "Bosch-Sensoren" },
+      "recording_sensors": { "name": "Aufzeichnungs-Sensoren" },
+      "energy_sensors": { "name": "Energie-Sensoren" },
+      "bosch_switches": { "name": "Bosch-Schalter" },
+      "bosch_selects": { "name": "Bosch-Auswahlfelder" },
+      "heating_circuit": { "name": "Heizkreis {circuit}" },
+      "water_heater_circuit": { "name": "Warmwasserbereiter {circuit}" },
+      "solar_circuit": { "name": "Solarkreis {circuit}" },
+      "zone_circuit": { "name": "Zonenkreis {circuit}" },
+      "device_circuit": { "name": "Gerät {circuit}" }
+  },
+  "entity": {
+      "sensor": {
+          "ch_pump_modulation": { "name": "Tatsächliche Heizungspumpenmodulation" },
+          "actual_power": { "name": "Aktuelle Leistung" },
+          "energy_consumption": { "name": "Energieverbrauch" },
+          "health_status": { "name": "Gesundheitsstatus" },
+          "hotwater_temp": { "name": "Warmwassertemperatur" },
+          "notifications": { "name": "Benachrichtigungen" },
+          "outdoor_temperature": { "name": "Außentemperatur" },
+          "system_pressure": { "name": "Systemdruck" },
+          "total_system_uptime": { "name": "Gesamtlaufzeit" },
+          "hc_actual_supply_temperature": { "name": "Tatsächliche Vorlauftemperatur" },
+          "hc_current_summer_winter_mode": { "name": "Aktueller Sommer-Winter-Modus" },
+          "hc_summer_winter_switchmode": { "name": "Sommer-Winter-Umschaltmodus" },
+          "hc_summer_winter_threshold": { "name": "Sommer-Winter-Schwellenwert" },
+          "hc_supply_temperature_setpoint": { "name": "Vorlauftemperatur-Sollwert" },
+          "dhw_water_flow": { "name": "Wasserdurchfluss" },
+          "dhw_working_time": { "name": "Betriebszeit" },
+          "recording_actual_ch_power": { "name": "Aktuelle Heizleistung" },
+          "recording_actual_dhw_power": { "name": "Aktuelle Warmwasserleistung" },
+          "recording_actual_power": { "name": "Aktuelle Leistung" },
+          "recording_actual_temp": { "name": "Aktuelle Temperatur" },
+          "recording_outdoor_temp": { "name": "Außentemperatur" },
+          "recording_room_temperature": { "name": "Raumtemperatur" },
+          "energy_temperature": { "name": "Energietemperatur" },
+          "energy_central_heating": { "name": "Energie Heizung" },
+          "energy_hot_water": { "name": "Energie Warmwasser" },
+          "ecus_avg_outdoor_temperature": { "name": "Durchschnittliche Außentemperatur (ECUS)" },
+          "ecus_central_heating": { "name": "Heizung" },
+          "ecus_hot_water": { "name": "Warmwasser" }
+      },
+      "binary_sensor": {
+          "flame_status": { "name": "Flammenstatus" }
+      },
+      "switch": {
+          "dhw_charge": { "name": "Laden" }
+      }
   }
 }

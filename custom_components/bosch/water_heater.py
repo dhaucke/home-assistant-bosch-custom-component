@@ -70,6 +70,14 @@ class BoschWaterHeater(BoschClimateWaterEntity, WaterHeaterEntity):
             hass=hass, uuid=uuid, bosch_object=bosch_object, gateway=gateway
         )
 
+    @property
+    def device_translation_key(self):
+        return "water_heater_circuit"
+
+    @property
+    def device_translation_placeholders(self):
+        return {"circuit": self._attr_name}
+
     async def service_charge(self, value) -> None:
         """Set charge of DHW device.
 

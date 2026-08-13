@@ -49,5 +49,55 @@
             }
           }
         }
-      }
+      },
+    "device": {
+        "bosch_sensors": { "name": "Bosch sensors" },
+        "recording_sensors": { "name": "Recording sensors" },
+        "energy_sensors": { "name": "Energy sensors" },
+        "bosch_switches": { "name": "Bosch switches" },
+        "bosch_selects": { "name": "Bosch selects" },
+        "heating_circuit": { "name": "Heating circuit {circuit}" },
+        "water_heater_circuit": { "name": "Water heater {circuit}" },
+        "solar_circuit": { "name": "Solar circuit {circuit}" },
+        "zone_circuit": { "name": "Zone circuit {circuit}" },
+        "device_circuit": { "name": "Device {circuit}" }
+    },
+    "entity": {
+        "sensor": {
+            "ch_pump_modulation": { "name": "Actual heating pump modulation" },
+            "actual_power": { "name": "Actual Power" },
+            "energy_consumption": { "name": "Energy consumption" },
+            "health_status": { "name": "Health status" },
+            "hotwater_temp": { "name": "Hotwater temp" },
+            "notifications": { "name": "Notifications" },
+            "outdoor_temperature": { "name": "Outdoor temperature" },
+            "system_pressure": { "name": "System pressure" },
+            "total_system_uptime": { "name": "Total system uptime" },
+            "hc_actual_supply_temperature": { "name": "Actual supply temperature for HC" },
+            "hc_current_summer_winter_mode": { "name": "Current Summer Winter Mode" },
+            "hc_summer_winter_switchmode": { "name": "Summer Winter Switchmode" },
+            "hc_summer_winter_threshold": { "name": "Summer Winter Threshold" },
+            "hc_supply_temperature_setpoint": { "name": "Supply temperature setpoint" },
+            "dhw_water_flow": { "name": "Water flow" },
+            "dhw_working_time": { "name": "Working time" },
+            "recording_actual_ch_power": { "name": "Actual CH power" },
+            "recording_actual_dhw_power": { "name": "Actual DHW power" },
+            "recording_actual_power": { "name": "Actual power" },
+            "recording_actual_temp": { "name": "Actual temperature" },
+            "recording_outdoor_temp": { "name": "Outdoor temperature" },
+            "recording_room_temperature": { "name": "Room temperature" },
+            "energy_temperature": { "name": "Energy temperature" },
+            "energy_central_heating": { "name": "Energy central heating" },
+            "energy_hot_water": { "name": "Energy hot water" },
+            "ecus_avg_outdoor_temperature": { "name": "Ecus avg outdoor temperature" },
+            "ecus_central_heating": { "name": "Central heating" },
+            "ecus_hot_water": { "name": "Hot water" }
+        },
+        "binary_sensor": {
+            "flame_status": { "name": "Flame status" }
+        },
+        "switch": {
+            "dhw_charge": { "name": "Charge" }
+        }
+    }
 }

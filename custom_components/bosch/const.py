@@ -93,6 +93,13 @@ CIRCUITS_SENSOR_NAMES = {
     ZN: "Zone circuit",
     DV: "Device",
 }
+CIRCUIT_DEVICE_TRANSLATION_KEYS = {
+    DHW: "water_heater_circuit",
+    HC: "heating_circuit",
+    SC: "solar_circuit",
+    ZN: "zone_circuit",
+    DV: "device_circuit",
+}
 
 BINARY_SENSOR = "binary_sensor"
 LAST_RESET = "last_reset"

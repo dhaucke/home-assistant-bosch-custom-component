@@ -8,7 +8,7 @@ from bosch_thermostat_client.const import GATEWAY, SELECT
 from homeassistant.components.select import SelectEntity
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 
-from .bosch_entity import BoschEntity
+from .bosch_entity import BoschEntity, async_migrate_unique_id
 from .const import (
     DOMAIN,
     SIGNAL_BOSCH,
@@ -25,6 +25,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     data[SELECT] = []
     selects = data[GATEWAY].switches.selects
     for select in selects:
+        async_migrate_unique_id(
+            hass,
+            "select",
+            f"Select{select.name}{uuid}",
+            f"Select{select.attr_id}{uuid}",
+        )
         data[SELECT].append(
             BoschSelect(
                 hass=hass,
@@ -72,7 +78,7 @@ class BoschSelect(BoschEntity, SelectEntity):
         self._attr_uri = attr_uri
         self._state = bosch_object.state
         self._update_init = True
-        self._attr_unique_id = f"{self._domain_name}{self._attr_name}{self._uuid}"
+        self._attr_unique_id = f"{self._domain_name}{self._attr_uri}{self._uuid}"
         self._attrs = {}
         self._attr_entity_registry_enabled_default = is_enabled
 
@@ -80,6 +86,10 @@ class BoschSelect(BoschEntity, SelectEntity):
     def device_name(self):
         """Return device name."""
         return "Bosch selects"
+
+    @property
+    def device_translation_key(self):
+        return "bosch_selects"
 
     @property
     def current_option(self) -> str:

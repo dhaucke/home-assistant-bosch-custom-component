@@ -7,6 +7,7 @@ from .statistic_helper import StatisticHelper
 from homeassistant.components.sensor import SensorDeviceClass, SensorStateClass
 
 from ..const import SIGNAL_RECORDING_UPDATE_BOSCH, UNITS_CONVERTER, VALUE
+from ..entity_translations import RECORDING_TRANSLATION_KEYS
 from homeassistant.components.recorder.models import (
     StatisticData,
     timestamp_to_datetime_or_none,
@@ -22,11 +23,16 @@ class RecordingSensor(StatisticHelper):
 
     signal = SIGNAL_RECORDING_UPDATE_BOSCH
     _domain_name = "Recording"
+    _translation_keys = RECORDING_TRANSLATION_KEYS
 
     @property
     def device_name(self) -> str:
         """Device name."""
         return "Recording sensors"
+
+    @property
+    def device_translation_key(self):
+        return "recording_sensors"
 
     @property
     def statistic_id(self) -> str:

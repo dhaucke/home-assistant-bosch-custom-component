@@ -10,6 +10,7 @@ from homeassistant.components.sensor import SensorEntity, SensorDeviceClass, Sen
 
 from ..bosch_entity import BoschEntity
 from ..const import UNITS_CONVERTER
+from ..entity_translations import SENSOR_TRANSLATION_KEYS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -18,6 +19,9 @@ entity_categories = {"diagnostic": EntityCategory.DIAGNOSTIC}
 
 class BoschBaseSensor(BoschEntity, SensorEntity):
     """Base class for all sensor entities."""
+
+    # Overridden by subclasses that expose translatable, known attr_ids.
+    _translation_keys: dict[str, str] | None = None
 
     def __init__(
         self,
@@ -39,7 +43,15 @@ class BoschBaseSensor(BoschEntity, SensorEntity):
             gateway=gateway,
             domain_name=domain_name,
         )
-        if not circuit_type:
+        self._attr_uri = attr_uri
+        translation_key = (
+            self._translation_keys.get(attr_uri) if self._translation_keys else None
+        )
+        self._attr_translation_key = translation_key
+        if translation_key:
+            self._attr_has_entity_name = True
+            self._attr_translation_key = translation_key
+        elif not circuit_type:
             self._attr_name = (
                 f"{domain_name} {name}"
                 if domain_name != "Sensors" and domain_name
@@ -47,7 +59,6 @@ class BoschBaseSensor(BoschEntity, SensorEntity):
             )
         else:
             self._attr_name = f"{self._bosch_object.parent_id} {name}"
-        self._attr_uri = attr_uri
         self._attr_device_class = None
         self._attr_state_class = None
         if self._bosch_object.device_class:
@@ -102,6 +113,11 @@ class BoschBaseSensor(BoschEntity, SensorEntity):
             return None
 
         def check_name():
+            # Entities with a translation_key have a stable, translated
+            # name resolved by HA - don't let the device's own
+            # (English, untranslated) reported name clobber it.
+            if self._attr_translation_key:
+                return
             if data.get(NAME, "") != self._attr_name:
                 self._attr_name = data.get(NAME, self._attr_name)
 

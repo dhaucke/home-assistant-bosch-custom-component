@@ -7,8 +7,9 @@ from homeassistant.components.number import NumberEntity
 from homeassistant.components.number.const import NumberMode
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 
-from .bosch_entity import BoschEntity
+from .bosch_entity import BoschEntity, async_migrate_unique_id
 from .const import (
+    CIRCUIT_DEVICE_TRANSLATION_KEYS,
     CIRCUITS,
     CIRCUITS_SENSOR_NAMES,
     DOMAIN,
@@ -26,6 +27,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     enabled_switches = config_entry.data.get(NUMBER, [])
     data_number = []
     for switch in data[GATEWAY].number_switches:
+        async_migrate_unique_id(
+            hass,
+            "number",
+            f"Switches{switch.name}{uuid}",
+            f"Switches{switch.attr_id}{uuid}",
+        )
         data_number.append(
             BoschNumber(
                 hass=hass,
@@ -42,6 +49,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         circuits = data[GATEWAY].get_circuits(circ_type)
         for circuit in circuits:
             for switch in circuit.number_switches:
+                async_migrate_unique_id(
+                    hass,
+                    "number",
+                    f"{circuit.name}{switch.name}{uuid}",
+                    f"{circuit.name}{switch.attr_id}{uuid}",
+                )
                 data_number.append(
                     CircuitNumber(
                         hass=hass,
@@ -93,7 +106,7 @@ class BoschNumber(BoschEntity, NumberEntity):
         self._attr_uri = attr_uri
         self._state = bosch_object.state
         self._update_init = True
-        self._attr_unique_id = f"{self._domain_name}{self._attr_name}{self._uuid}"
+        self._attr_unique_id = f"{self._domain_name}{self._attr_uri}{self._uuid}"
         self._attrs = {}
         self._circuit_type = circuit_type
         self._attr_entity_registry_enabled_default = is_enabled
@@ -102,6 +115,10 @@ class BoschNumber(BoschEntity, NumberEntity):
     def device_name(self) -> str:
         """Return device name."""
         return "Bosch switches"
+
+    @property
+    def device_translation_key(self):
+        return "bosch_switches"
 
     @property
     def native_min_value(self) -> float:
@@ -156,3 +173,11 @@ class CircuitNumber(BoschNumber):
     @property
     def device_name(self):
         return CIRCUITS_SENSOR_NAMES[self._circuit_type] + " " + self._domain_name
+
+    @property
+    def device_translation_key(self):
+        return CIRCUIT_DEVICE_TRANSLATION_KEYS.get(self._circuit_type)
+
+    @property
+    def device_translation_placeholders(self):
+        return {"circuit": self._domain_name}

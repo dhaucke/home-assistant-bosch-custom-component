@@ -9,8 +9,10 @@ from bosch_thermostat_client.const import GATEWAY
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 
-from .bosch_entity import BoschEntity
+from .bosch_entity import BoschEntity, async_migrate_unique_id
+from .entity_translations import SWITCH_TRANSLATION_KEYS
 from .const import (
+    CIRCUIT_DEVICE_TRANSLATION_KEYS,
     CIRCUITS,
     CIRCUITS_SENSOR_NAMES,
     DOMAIN,
@@ -30,6 +32,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     enabled_switches = config_entry.data.get(SWITCH, [])
     data_switch = []
     for switch in data[GATEWAY].regular_switches:
+        async_migrate_unique_id(
+            hass,
+            SWITCH,
+            f"Switches{switch.name}{uuid}",
+            f"Switches{switch.attr_id}{uuid}",
+        )
         data_switch.append(
             BoschSwitch(
                 hass=hass,
@@ -46,6 +54,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         circuits = data[GATEWAY].get_circuits(circ_type)
         for circuit in circuits:
             for switch in circuit.regular_switches:
+                async_migrate_unique_id(
+                    hass,
+                    SWITCH,
+                    f"{circuit.name}{switch.name}{uuid}",
+                    f"{circuit.name}{switch.attr_id}{uuid}",
+                )
                 data_switch.append(
                     CircuitSwitch(
                         hass=hass,
@@ -95,11 +109,17 @@ class BoschBaseSwitch(BoschEntity, SwitchEntity):
             gateway=gateway,
             domain_name=domain_name,
         )
-        self._attr_name = name
         self._attr_uri = attr_uri
+        self._log_name = name
+        translation_key = SWITCH_TRANSLATION_KEYS.get(attr_uri)
+        if translation_key:
+            self._attr_has_entity_name = True
+            self._attr_translation_key = translation_key
+        else:
+            self._attr_name = name
         self._state = bosch_object.state
         self._update_init = True
-        self._attr_unique_id = self._domain_name + self._attr_name + self._uuid
+        self._attr_unique_id = self._domain_name + self._attr_uri + self._uuid
         self._attrs = {}
         self._circuit_type = circuit_type
         self._attr_entity_registry_enabled_default = is_enabled
@@ -111,7 +131,7 @@ class BoschBaseSwitch(BoschEntity, SwitchEntity):
 
     async def async_turn_on(self, **kwargs):
         """Turn on switch."""
-        _LOGGER.debug("Turning on %s switch.", self._attr_name)
+        _LOGGER.debug("Turning on %s switch.", self._log_name)
         await self._bosch_object.turn_on()
         self._state = True
         self.schedule_update_ha_state()
@@ -123,7 +143,7 @@ class BoschBaseSwitch(BoschEntity, SwitchEntity):
 
     async def async_turn_off(self, **kwargs):
         """Turn off switch."""
-        _LOGGER.debug("Turning off %s switch.", self._attr_name)
+        _LOGGER.debug("Turning off %s switch.", self._log_name)
         await self._bosch_object.turn_off()
         self._state = False
         self.schedule_update_ha_state()
@@ -141,6 +161,10 @@ class BoschSwitch(BoschBaseSwitch):
     def device_name(self):
         return "Bosch switches"
 
+    @property
+    def device_translation_key(self):
+        return "bosch_switches"
+
 
 class CircuitSwitch(BoschBaseSwitch):
     """Representation of a Bosch circuit switch."""
@@ -148,3 +172,11 @@ class CircuitSwitch(BoschBaseSwitch):
     @property
     def device_name(self):
         return CIRCUITS_SENSOR_NAMES[self._circuit_type] + " " + self._domain_name
+
+    @property
+    def device_translation_key(self):
+        return CIRCUIT_DEVICE_TRANSLATION_KEYS.get(self._circuit_type)
+
+    @property
+    def device_translation_placeholders(self):
+        return {"circuit": self._domain_name}

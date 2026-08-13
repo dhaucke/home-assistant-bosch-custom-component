@@ -57,8 +57,9 @@ class BoschThermostat(BoschClimateWaterEntity, ClimateEntity):
         self, hass, uuid, bosch_object, gateway, optimistic_mode: bool = False
     ) -> None:
         """Initialize the thermostat."""
+        self._is_zone = "/zones" in bosch_object.attr_id
         self._name_prefix = (
-            "Zone circuit " if "/zones" in bosch_object.attr_id else "Heating circuit "
+            "Zone circuit " if self._is_zone else "Heating circuit "
         )
         self._mode = {}
         self._hvac_modes = []
@@ -69,6 +70,14 @@ class BoschThermostat(BoschClimateWaterEntity, ClimateEntity):
         super().__init__(
             hass=hass, uuid=uuid, bosch_object=bosch_object, gateway=gateway
         )
+
+    @property
+    def device_translation_key(self):
+        return "zone_circuit" if self._is_zone else "heating_circuit"
+
+    @property
+    def device_translation_placeholders(self):
+        return {"circuit": self._attr_name}
 
     @property
     def state_attributes(self) -> dict[str, Any]:

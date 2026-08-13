@@ -25,18 +25,21 @@ _LOGGER = logging.getLogger(__name__)
 EnergySensors = [
     {
         "name": "energy temperature",
+        "translation_key": "energy_temperature",
         "attr": "T",
         "unitOfMeasure": UnitOfTemperature.CELSIUS,
         "deviceClass": SensorDeviceClass.TEMPERATURE,
     },
     {
         "name": "energy central heating",
+        "translation_key": "energy_central_heating",
         "attr": "CH",
         "unitOfMeasure": UnitOfEnergy.KILO_WATT_HOUR,
         "deviceClass": SensorDeviceClass.ENERGY,
     },
     {
         "name": "energy hot water",
+        "translation_key": "energy_hot_water",
         "attr": "HW",
         "unitOfMeasure": UnitOfEnergy.KILO_WATT_HOUR,
         "deviceClass": SensorDeviceClass.ENERGY,
@@ -46,6 +49,7 @@ EnergySensors = [
 EcusRecordingSensors = [
     {
         "name": "ecus avg outdoor temperature",
+        "translation_key": "ecus_avg_outdoor_temperature",
         "attr": "T",
         "unitOfMeasure": UnitOfTemperature.CELSIUS,
         "normalize": lambda x: x / 10,
@@ -53,12 +57,14 @@ EcusRecordingSensors = [
     },
     {
         "name": "central heating",
+        "translation_key": "ecus_central_heating",
         "attr": "CH",
         "unitOfMeasure": UnitOfVolume.CUBIC_METERS,
         "deviceClass": SensorDeviceClass.GAS,
     },
     {
         "name": "hot water",
+        "translation_key": "ecus_hot_water",
         "attr": "HW",
         "unitOfMeasure": UnitOfVolume.CUBIC_METERS,
         "deviceClass": SensorDeviceClass.GAS,
@@ -85,6 +91,10 @@ class EnergySensor(StatisticHelper):
         self._attr_unique_id = f"{self._domain_name}{self._read_attr_to_search}{uuid}"
 
         super().__init__(name=sensor_attributes.get("name"), uuid=uuid, **kwargs)
+        translation_key = sensor_attributes.get("translation_key")
+        if translation_key:
+            self._attr_has_entity_name = True
+            self._attr_translation_key = translation_key
         self._unit_of_measurement = sensor_attributes.get(UNITS)
         self._attr_device_class = sensor_attributes.get(
             "deviceClass", SensorDeviceClass.ENERGY
@@ -99,6 +109,10 @@ class EnergySensor(StatisticHelper):
     def device_name(self) -> str:
         """Device name."""
         return "Energy sensors"
+
+    @property
+    def device_translation_key(self):
+        return "energy_sensors"
 
     async def async_update(self) -> None:
         """Update state of device."""
