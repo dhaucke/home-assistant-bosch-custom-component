@@ -1,3 +1,5 @@
+![Bosch thermostat Integration für Home Assistant](https://raw.githubusercontent.com/dhaucke/home-assistant-bosch-custom-component/master/assets/bosch-banner.svg)
+
 # Bosch thermostat
 
 **Bosch/Buderus/Nefit/IVT-Heizungssteuerung in Home Assistant.**

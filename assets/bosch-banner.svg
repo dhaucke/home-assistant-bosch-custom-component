@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Bosch thermostat for Home Assistant">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2B6CB0"/>
+      <stop offset="100%" stop-color="#C43318"/>
+    </linearGradient>
+    <pattern id="stripes" width="42" height="42" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="42" height="42" fill="transparent"/>
+      <rect width="10" height="42" fill="#ffffff" opacity="0.05"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#bg)"/>
+  <rect width="1200" height="400" fill="url(#stripes)"/>
+
+  <text x="70" y="170" font-family="Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#ffffff">Bosch thermostat</text>
+  <text x="74" y="212" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="400" fill="#ffffff" opacity="0.92">für Home Assistant</text>
+  <text x="74" y="250" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="400" fill="#ffffff" opacity="0.8">IVT &#183; NEFIT &#183; EasyControl &#183; Buderus</text>
+
+  <rect x="70" y="278" width="460" height="2" fill="#ffffff" opacity="0.25"/>
+
+  <!-- thermostat dial -->
+  <g transform="translate(1000,150)">
+    <circle cx="0" cy="0" r="120" fill="#ffffff" opacity="0.08"/>
+    <circle cx="0" cy="0" r="86" fill="none" stroke="#ffffff" stroke-width="9" opacity="0.92"/>
+    <g stroke="#ffffff" stroke-width="6" opacity="0.85">
+      <line x1="0" y1="-86" x2="0" y2="-70"/>
+      <line x1="60.8" y1="-60.8" x2="49.5" y2="-49.5"/>
+      <line x1="86" y1="0" x2="70" y2="0"/>
+      <line x1="60.8" y1="60.8" x2="49.5" y2="49.5"/>
+      <line x1="0" y1="86" x2="0" y2="70"/>
+      <line x1="-60.8" y1="60.8" x2="-49.5" y2="49.5"/>
+      <line x1="-86" y1="0" x2="-70" y2="0"/>
+    </g>
+    <line x1="0" y1="0" x2="46" y2="46" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity="0.95"/>
+    <circle cx="0" cy="0" r="11" fill="#ffffff" opacity="0.95"/>
+  </g>
+</svg>
