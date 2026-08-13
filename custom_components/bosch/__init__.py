@@ -298,9 +298,7 @@ class BoschGatewayEntry:
                 FIRMWARE_SCAN_INTERVAL,  # SCAN INTERVAL FV
             )
             async_call_later(self.hass, 5, self.thermostat_refresh)
-            asyncio.run_coroutine_threadsafe(self.recording_sensors_update(),
-                self.hass.loop
-            )
+            self.hass.async_create_task(self.recording_sensors_update())
 
     async def async_init_bosch(self) -> bool:
         """Initialize Bosch gateway module."""
