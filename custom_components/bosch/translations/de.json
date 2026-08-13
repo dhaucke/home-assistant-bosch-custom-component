@@ -80,6 +80,19 @@
           "hc_supply_temperature_setpoint": { "name": "Vorlauftemperatur-Sollwert" },
           "dhw_water_flow": { "name": "Wasserdurchfluss" },
           "dhw_working_time": { "name": "Betriebszeit" },
+          "system_supply_temp_setpoint": { "name": "Vorlauftemperatur-Sollwert" },
+          "system_actual_supply_temp": { "name": "Tatsächliche Vorlauftemperatur" },
+          "switch_temp": { "name": "Schalttemperatur" },
+          "return_temp": { "name": "Rücklauftemperatur" },
+          "chimney_temp": { "name": "Kamintemperatur" },
+          "appliance_supply_temperature": { "name": "Vorlauftemperatur (Gerät)" },
+          "actual_modulation": { "name": "Aktuelle Modulation" },
+          "energy_start_time": { "name": "Startzeit" },
+          "burner_power_setpoint": { "name": "Brenner-Leistungssollwert" },
+          "number_of_starts": { "name": "Anzahl Starts" },
+          "pool_temperature": { "name": "Pooltemperatur" },
+          "hc_pump_modulation": { "name": "Pumpenmodulation" },
+          "hc_current_room_setpoint": { "name": "Aktueller Raum-Sollwert" },
           "recording_actual_ch_power": { "name": "Aktuelle Heizleistung" },
           "recording_actual_dhw_power": { "name": "Aktuelle Warmwasserleistung" },
           "recording_actual_power": { "name": "Aktuelle Leistung" },
@@ -94,7 +107,8 @@
           "ecus_hot_water": { "name": "Warmwasser" }
       },
       "binary_sensor": {
-          "flame_status": { "name": "Flammenstatus" }
+          "flame_status": { "name": "Flammenstatus" },
+          "chimney_sweeper": { "name": "Schornsteinfegerfunktion" }
       },
       "switch": {
           "dhw_charge": { "name": "Laden" }

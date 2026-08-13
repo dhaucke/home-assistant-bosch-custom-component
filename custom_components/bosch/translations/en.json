@@ -80,6 +80,19 @@
           "hc_supply_temperature_setpoint": { "name": "Supply temperature setpoint" },
           "dhw_water_flow": { "name": "Water flow" },
           "dhw_working_time": { "name": "Working time" },
+          "system_supply_temp_setpoint": { "name": "Supply temp setpoint" },
+          "system_actual_supply_temp": { "name": "Actual supply temp" },
+          "switch_temp": { "name": "Switch temp" },
+          "return_temp": { "name": "Return temp" },
+          "chimney_temp": { "name": "Chimney temp" },
+          "appliance_supply_temperature": { "name": "Actual Supply temperature" },
+          "actual_modulation": { "name": "Actual modulation" },
+          "energy_start_time": { "name": "Start time" },
+          "burner_power_setpoint": { "name": "Burner power setpoint" },
+          "number_of_starts": { "name": "Number of starts" },
+          "pool_temperature": { "name": "Pool temperature" },
+          "hc_pump_modulation": { "name": "Pump modulation" },
+          "hc_current_room_setpoint": { "name": "Current room setpoint" },
           "recording_actual_ch_power": { "name": "Actual CH power" },
           "recording_actual_dhw_power": { "name": "Actual DHW power" },
           "recording_actual_power": { "name": "Actual power" },
@@ -94,7 +107,8 @@
           "ecus_hot_water": { "name": "Hot water" }
       },
       "binary_sensor": {
-          "flame_status": { "name": "Flame status" }
+          "flame_status": { "name": "Flame status" },
+          "chimney_sweeper": { "name": "Chimney sweeper mode" }
       },
       "switch": {
           "dhw_charge": { "name": "Charge" }

@@ -40,12 +40,25 @@ SENSOR_TRANSLATION_KEYS: dict[str, str] = {
     "outdoor_t1": "outdoor_temperature",
     "systemPressure": "system_pressure",
     "totalSystem": "total_system_uptime",
+    "supply_t1_setpoint": "system_supply_temp_setpoint",
+    "supply_t1": "system_actual_supply_temp",
+    "switch_temperature": "switch_temp",
+    "return": "return_temp",
+    "chimney": "chimney_temp",
+    "actualSupplyTemp": "appliance_supply_temperature",
+    "actualModulation": "actual_modulation",
+    "startDateTime": "energy_start_time",
+    "burnerPowerSetpoint": "burner_power_setpoint",
+    "numberOfStarts": "number_of_starts",
+    "poolTemperature": "pool_temperature",
     # heatingCircuits.sensors (hc1 etc)
     "actualSupplyTemperature": "hc_actual_supply_temperature",
     "currentSuWiMode": "hc_current_summer_winter_mode",
     "suWiSwitchMode": "hc_summer_winter_switchmode",
     "suWiThreshold": "hc_summer_winter_threshold",
     "supplyTemperatureSetpoint": "hc_supply_temperature_setpoint",
+    "pumpModulation": "hc_pump_modulation",
+    "currentRoomSetpoint": "hc_current_room_setpoint",
     # dhwCircuits.sensors (dhw1 etc)
     "waterFlow": "dhw_water_flow",
     "workingTime": "dhw_working_time",
@@ -66,6 +79,7 @@ RECORDING_TRANSLATION_KEYS: dict[str, str] = {
 
 BINARY_SENSOR_TRANSLATION_KEYS: dict[str, str] = {
     "flameStatus": "flame_status",
+    "ChimneySweeper": "chimney_sweeper",
 }
 
 SWITCH_TRANSLATION_KEYS: dict[str, str] = {
