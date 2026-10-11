@@ -16,6 +16,7 @@ CONF_PROTOCOL = "http_xmpp"
 CONF_DEVICE_TYPE = "device_type"
 
 GATEWAY = "gateway"
+GATEWAY_DEVICE_ID = "gateway_device_id"
 CLIMATE = "climate"
 # SENSOR = "sensor"
 SOLAR = "solar"

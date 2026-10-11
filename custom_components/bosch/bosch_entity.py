@@ -5,7 +5,7 @@ from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
-from .const import DEFAULT_MAX_TEMP, DEFAULT_MIN_TEMP, DOMAIN
+from .const import DEFAULT_MAX_TEMP, DEFAULT_MIN_TEMP, DOMAIN, GATEWAY_DEVICE_ID
 from homeassistant.helpers.entity import DeviceInfo
 
 _LOGGER = logging.getLogger(__name__)
@@ -95,7 +95,7 @@ class BoschEntity:
             model=self._gateway.device_type,
             sw_version=self._gateway.firmware,
             hw_version=self._uuid,
-            via_device=(DOMAIN, self._uuid),
+            via_device_id=self.hass.data[DOMAIN][self._uuid][GATEWAY_DEVICE_ID],
         )
         translation_key = self.device_translation_key
         if translation_key:

@@ -71,6 +71,7 @@ from .const import (
     FIRMWARE_SCAN_INTERVAL,
     FW_INTERVAL,
     GATEWAY,
+    GATEWAY_DEVICE_ID,
     INTERVAL,
     NOTIFICATION_ID,
     RECORDING_INTERVAL,
@@ -258,18 +259,20 @@ class BoschGatewayEntry:
             async_dispatcher_connect(
                 self.hass, SIGNAL_BOSCH, self.async_get_signals
             )
-            await self.hass.config_entries.async_forward_entry_setups(
-                self.config_entry,
-                [component for component in self.supported_platforms if component != SOLAR]
-            )
-            device_registry = dr.async_get(self.hass)
-            device_registry.async_get_or_create(
+            # Gateway device must exist before the platforms, whose devices
+            # link to it via via_device_id.
+            gateway_device = dr.async_get(self.hass).async_get_or_create(
                 config_entry_id=self.config_entry.entry_id,
                 identifiers={(DOMAIN, self.uuid)},
                 manufacturer=self.gateway.device_model,
                 model=self.gateway.device_type,
                 name=self.gateway.device_name,
                 sw_version=self.gateway.firmware,
+            )
+            self.hass.data[DOMAIN][self.uuid][GATEWAY_DEVICE_ID] = gateway_device.id
+            await self.hass.config_entries.async_forward_entry_setups(
+                self.config_entry,
+                [component for component in self.supported_platforms if component != SOLAR]
             )
             if GATEWAY in self.hass.data[DOMAIN][self.uuid]:
                 _LOGGER.debug("Registering debug services.")
